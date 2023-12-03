@@ -5,19 +5,20 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.time.Duration;
+
+import com.iiht.evaluation.automation.Activities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import com.iiht.evaluation.automation.SubActivities;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 
 public class TestAutomation {
 	public static WebDriver driver=null;
-	@BeforeClass
-	public static void initialize(){
+	@BeforeMethod
+	public static void setup(){
 		System.out.println("\nBefore method setup");
 		String req_chrome_driver_path = System.getProperty("user.dir") + "/binaries/chromedriver.exe";
 		System.out.println(req_chrome_driver_path);
@@ -53,10 +54,20 @@ public class TestAutomation {
 		SubActivities.check_page_load_complete(driver);
 	}
 
+	@AfterMethod
+	public static void teardown(){
+		driver.quit();
+	}
+
 
 	@Test
 	public void testDemo(){
-		System.out.println("I am in test");
+		Activities.open_login_panel(driver);
+		Activities.open_signin_box(driver);
+		Activities.signin_box_enter_email(driver, "prashant.ranjan.qa@gmail.com");
+		Activities.signin_box_enter_password(driver, "igetup@7AM");
+		Activities.signin_box_click_login_button(driver);
+		Activities.check_logged_in_user(driver, "Prashant.ranjan.qa@gmail.com");
 	}
 
 }
