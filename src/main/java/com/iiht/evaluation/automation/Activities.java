@@ -163,7 +163,7 @@ public class Activities{
         }
         String logged_in_user_link_title_attribute = logged_in_user_link_element.getAttribute("title");
         System.out.println("logged_in_user_link_title_attribute " + logged_in_user_link_title_attribute);
-        if (logged_in_user_link_title_attribute.trim().equals(email)) {
+        if (logged_in_user_link_title_attribute.trim().toLowerCase().equals(email)) {
             is_email_checked = true;
         }
         return is_email_checked;

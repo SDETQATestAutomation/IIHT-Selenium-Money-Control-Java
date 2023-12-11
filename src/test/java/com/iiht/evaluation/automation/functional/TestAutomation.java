@@ -16,9 +16,10 @@ import org.testng.annotations.*;
 
 
 public class TestAutomation {
-	public static WebDriver driver=null;
+	public static WebDriver driver = null;
+
 	@BeforeMethod
-	public static void setup(){
+	public static void setup() {
 		System.out.println("\nBefore method setup");
 		String req_chrome_driver_path = System.getProperty("user.dir") + "/binaries/chromedriver.exe";
 		System.out.println(req_chrome_driver_path);
@@ -38,7 +39,7 @@ public class TestAutomation {
 		options.addArguments("--no-sandbox");
 		options.addArguments("disable-popup-blocking");
 		options.addArguments("--remote-allow-origins=*");
-//		options.setExperimentalOption("debuggerAddress", "127.0.0.1:9223");
+		options.setExperimentalOption("debuggerAddress", "127.0.0.1:9223");
 
 		Map<String, Object> loggingPrefs = new HashMap<>();
 		loggingPrefs.put("driver", "INFO");
@@ -50,24 +51,67 @@ public class TestAutomation {
 		ChromeDriverService service = new ChromeDriverService.Builder().usingDriverExecutable(new File(req_chrome_driver_path)).build();
 		driver = new ChromeDriver(service, options);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-		driver.get(base_url);
+//		driver.get(base_url);
 		SubActivities.check_page_load_complete(driver);
 	}
 
 	@AfterMethod
-	public static void teardown(){
+	public static void teardown() {
 		driver.quit();
 	}
 
 
 	@Test
-	public void testDemo(){
-		Activities.open_login_panel(driver);
-		Activities.open_signin_box(driver);
-		Activities.signin_box_enter_email(driver, "prashant.ranjan.qa@gmail.com");
-		Activities.signin_box_enter_password(driver, "igetup@7AM");
-		Activities.signin_box_click_login_button(driver);
-		Activities.check_logged_in_user(driver, "Prashant.ranjan.qa@gmail.com");
+	public static void test_success_login() {
+		boolean testcase_status = true;
+		String email = "prashant.ranjan.qa@gmail.com";
+		String password = "igetup@7AM";
+		try {
+			boolean open_login_panel_succeed = Activities.open_login_panel(driver);
+			System.out.println("open_login_panel_succeed " + open_login_panel_succeed);
+			if (!open_login_panel_succeed) {
+				testcase_status = false;
+			}
+			if (testcase_status) {
+				boolean open_signin_box_succeed = Activities.open_signin_box(driver);
+				System.out.println("open_signin_box_succeed " + open_signin_box_succeed);
+				if (!open_signin_box_succeed) {
+					testcase_status = false;
+				}
+			}
+			if (testcase_status) {
+				boolean signin_box_enter_email_succeed = Activities.signin_box_enter_email(driver, email);
+				System.out.println("signin_box_enter_email_succeed " + signin_box_enter_email_succeed);
+				if (!signin_box_enter_email_succeed) {
+					testcase_status = false;
+				}
+			}
+			if (testcase_status) {
+				boolean signin_box_enter_password_succeed = Activities.signin_box_enter_password(driver, password);
+				System.out.println("signin_box_enter_password_succeed " + signin_box_enter_password_succeed);
+				if (!signin_box_enter_password_succeed) {
+					testcase_status = false;
+				}
+			}
+			if (testcase_status) {
+				boolean signin_box_click_login_button_succeed = Activities.signin_box_click_login_button(driver);
+				System.out.println("signin_box_click_login_button_succeed " + signin_box_click_login_button_succeed);
+				if (!signin_box_click_login_button_succeed) {
+					testcase_status = false;
+				}
+			}
+			if (testcase_status) {
+				boolean check_logged_in_user_succeed = Activities.check_logged_in_user(driver, email);
+				System.out.println("check_logged_in_user_succeed " + check_logged_in_user_succeed);
+				if (!check_logged_in_user_succeed) {
+					testcase_status = false;
+				}
+			}
+			System.out.println("testcase_status " + testcase_status);
+
+		} catch (Exception ex) {
+			System.out.println("ex " + ex);
+		}
 	}
 
 }

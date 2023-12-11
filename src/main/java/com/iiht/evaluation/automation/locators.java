@@ -9,7 +9,7 @@ public class locators {
     static {
         money_control_element.put("login_link", "//a[contains(@title,'Login') and @class='userlink']");
         money_control_element.put("login_signup_box", "//div[@class='log_signupbox']");
-        money_control_element.put("signup_box_login_link", "//div[@id='mc_mainWrapper']/descendant::a[text()='Log-in']");
+        money_control_element.put("signup_box_login_link", "(//div[@class='log_signupbox']/descendant::a[contains(@class,'linkSignIn')])[1]");
         money_control_element.put("login_signin_iframe", "//iframe[@id='myframe']");
         money_control_element.put("login_signin_box", "//div[@id='mc_login']");
         money_control_element.put("signin_box_email_field", "//div[@id='mc_login']/descendant::input[@name='email']");
