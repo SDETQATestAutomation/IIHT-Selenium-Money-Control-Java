@@ -39,7 +39,7 @@ public class TestAutomation {
 		options.addArguments("--no-sandbox");
 		options.addArguments("disable-popup-blocking");
 		options.addArguments("--remote-allow-origins=*");
-		options.setExperimentalOption("debuggerAddress", "127.0.0.1:9223");
+		//options.setExperimentalOption("debuggerAddress", "127.0.0.1:9223");
 
 		Map<String, Object> loggingPrefs = new HashMap<>();
 		loggingPrefs.put("driver", "INFO");
@@ -51,7 +51,7 @@ public class TestAutomation {
 		ChromeDriverService service = new ChromeDriverService.Builder().usingDriverExecutable(new File(req_chrome_driver_path)).build();
 		driver = new ChromeDriver(service, options);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-//		driver.get(base_url);
+		driver.get(base_url);
 		SubActivities.check_page_load_complete(driver);
 	}
 
